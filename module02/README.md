@@ -72,9 +72,170 @@ Duplicates
 May feel nit-picky, but worth knowing the terms for future reading.
 
 
-## 02 - Bubble sort
+
+## 02 - Big O
+
+Big-O notation is a rough way of estimating how long a function takes to run based on the inputs you pass in.
+
+
+### Some functions are constant time
+
+In some cases functions are constant time in Big O.
+
+When we add two numbers, the "time" it takes to perform this doesn't change:
+
+```go
+Add(a, b int) int { return a + b }
+```
+
+We always do one operation then return it, so this is `O(1)`, or a constant time function.
+
+That constant can be really big - maybe we ALWAYS do 1 billion operations regardless of the input.
+
+The focus of Big O is how inputs CHANGE the time a function takes, not on evaluating the exact time of an algorithm.
+
+
+### Big O based on input value
+
+Let's say we had printed out every number from 1 to `max`:
+
+```go
+func SumToMax(max int) {
+  for i := 1; i <= max; i++ {
+    fmt.Println(i)
+  }
+}
+```
+
+This code will be slower with a larger `max` value because that var dictates how many things get printed out.
+
+We would say this function is `O(N)` where N is the value of the argument. ie `N` is equal to the value of `max`.
+
+Many functions exist like this:
+
+```go
+rand.Perm(123) // Generates a list with the numbers 0 to 122 in a random order
+```
+
+*SEE BENCHMARKS HERE*
+
+
+### Big O can be based on input size
+
+In other cases we can represent the function's runtime by the SIZE of the input
+
+```go
+func SumVals(vals []int) int {
+  	var sum int
+	for _, val := range vals {
+		sum += val
+	}
+	return sum
+}
+```
+
+Like before we are printing out values, but this time we are printing out every value in a slice provided.
+
+In this case our function is still `O(N)` in big O, but `N` is equal to the size of the `vals` input, not the values in it.
+
+
+### Multiple inputs
+
+There are times when we have multiple inputs, and how they affect the runtime depends on each input.
+
+```go
+// returns the index of x in the list
+func find(x int, list []int) int {
+  for i, val := range list {
+    if val == x {
+      return i
+    }
+  }
+  return -1
+}
+```
+
+We have two inputs here, but only the size of the list affects the overall time this algorithm takes.
+
+We have `O(N)` where `N == len(list)`
+
+
+On the other hand we might print out an `X * Y` grid:
+
+```go
+func Grid(x, y int) {
+  for yi := 0; yi < y; yi++ {
+    for xi := 0; xi < x; x++ {
+      fmt.Print('X')
+    }
+    fmt.Println()
+  }
+}
+```
+
+In this case our algorithm is dependent on the value of both inputs, so it is `O(xy)`
+
+Pretty much any combo is possible.
+
+### Sometimes functions grow much faster as the input size increases
+
+Let's say we have a function that prints out all the coordinates of a cube:
+
+```go
+func Cube(n int) string {
+	var sb strings.Builder
+	for x := 0; x < n; x++ {
+		for y := 0; y < n; y++ {
+			for z := 0; z < n; z++ {
+				sb.WriteString(fmt.Sprintf("(%d, %d, %d)\n", x, y, z))
+			}
+		}
+	}
+	return sb.String()
+}
+```
+
+Even tho we have one input, this is `O(N^3)` and the time required will grow at a much faster rate as N increases.
+
+You can have functions that grow even faster! Eg `O(2^N)`
+
+### But sometimes my function runs faster...
+
+See the `Find(list, x)` func...
+
+Sometimes list will start with X, so isn't my code faster here?
+
+Big O usually refers to the worse case scenario. That is, if we didn't find X, or if it was in the worst possible spot in the list - the last one we check.
+
+Because of this, Big O is a guideline and not an absolute. In practice you might find an algorithm performing better than Big O suggests because real data isn't alway sin the worst case format.
+
+Sorting is a good example - we are going to dive into Bubble Sort next and in theory it is one fo the slowest sorting algos we will explore, but in practice it does very well for small lists or partially sorted lists.
+
+### Calculating Big O
+
+I'm not going to get into this too much, but in most basic algorithms you can guess this pretty easily.
+
+In more complex code it can be trickier and takes practice.
+
+I'm teaching you roughly what Big O is so you can understand it when it comes up, and so we can talk a little about how these sorting algorithms compare to one another speed wise.
+
+It is also neat to see how some differ despite being the same Big O.
+
+
+### Additional resources
+
+- <https://www.interviewcake.com/article/java/big-o-notation-time-and-space-complexity>
+
+
+## 03 - Bubble sort
 
 One of the slowest sorting algorithms we will look at.
+
+`O(N^2)`
+
+At a high level, we are "bubbling" large values to the top of a list.
+
+
 
 Works by walking through a list and comparing consecutive pairs.
 
@@ -117,31 +278,82 @@ This is part of why this algorithm can perform faster than others - it is better
 We will learn more about where this algo is used later.
 
 
-## 03 - Bubble sort [code]
+
+## 04 - Bubble sort [code]
+
+
+## 05 - Bubble sort [bench]
 
 
 
-## 04 - Insertion sort
+## 06 - Insertion sort
 
-You have probably come up with this on your own
+You have probably come up with this on your own when picking up cards and placing them in a hand.
 
-We are going to explain what you would probably do on your own, then we will explore how you would repeat that with code.
+*Show high lvl*
 
-- Show impl
+This works well because our "hand" is always sorted. We only have to find where one new card goes.
 
-First impl will be slow because we need a "fast" way to find where the new cards go.
+Programmatically we have to figure out WHERE to put the new card.
 
-After we learn binary search we will come back to this sorting algorithm to do it again. Maybe benchmark the two.
+*Pull card, go from left to right looking at 3 cards*
 
-## 05 - Insertion sort without binary search [code]
+We can simplify this by saying, "is the new card less than the current card?"
+If so, insert card here and move rest of cards "right".
 
-## 06 - Binary search
+The fastest version of insertion sort uses binary search to find the new cards spot. We will learn that soon after learning binary search, but for now we can code this without it to get the basics down.
 
-## 07 - Binary search [code]
+W/out bin search: `O(N^2)`
+W/: `O(N log N)` - more on this later.
 
-## 08 - Insertion sort with binary search [code]
+## 07 - Insertion sort without binary search [code]
 
-## 09 - Recursion
+The simplest way to write insertion sort is to move sorted items to a new list.
+
+Our function doesn't return a sorted slice, so we need to copy them back into the original.
+
+*Code this...*
+
+Now we can move items to a `sorted` list and then copy them back over when done.
+
+Doesn't affect Big O because that copy is O(N), so doing `O(N) + O(N^2)` is basically the same as `O(N^2)`
+
+
+SliceTricks: <https://github.com/golang/go/wiki/SliceTricks>
+
+
+```go
+func InsertionStortInt(list []int) {
+	var sorted []int
+	for _, item := range list {
+		sorted = insert(sorted, item)
+	}
+	for i, val := range sorted {
+		list[i] = val
+	}
+}
+
+func insert(sorted []int, item int) []int {
+	for i, sortedItem := range sorted {
+		if item < sortedItem {
+			return append(sorted[:i], append([]int{item}, sorted[i:]...)...)
+		}
+	}
+	return append(sorted, item)
+}
+```
+
+## 08 - Practice Problems
+
+
+
+## 09 - Binary search
+
+## 10 - Binary search [code]
+
+## 11 - Insertion sort with binary search [code]
+
+## 12 - Recursion
 
 We can go back over many problems from Module 01 for this.
 
@@ -151,7 +363,7 @@ We can go back over many problems from Module 01 for this.
 - GCD
 - More?
 
-## 10 - Divide and conquer
+## 13 - Divide and conquer
 
 Often taught around recursion because the two mentally go hand in hand.
 
@@ -159,18 +371,16 @@ Often taught around recursion because the two mentally go hand in hand.
 
 We will see more of these as we get into sorting algorithms, but I'll leave those for those sections and mention then that they are divide and conquery.
 
-## 11 - Merge sort
+## 14 - Merge sort
 
-## 12 - Merge sort [code]
+## 15 - Merge sort [code]
 
-## 13 - Merge sort with goroutines [code]
+## 16 - Merge sort with goroutines [code]
 
-## 14 - Quicksort explained
+## 17 - Quicksort explained
 
-## 15 - Quicksort [code]
+## 18 - Quicksort [code]
 
-## 16 - Big O
+## 19 - Combining algorithms [code]
 
-## 17 - Benchmarking some sorting algorithms
-
-## 18 - Combining algorithms [code]
+## 20 - Benchmarking and comparing

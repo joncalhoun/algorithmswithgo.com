@@ -8,3 +8,15 @@ import (
 func TestInsertionSortInt(t *testing.T) {
 	sorttest.TestInt(t, InsertionStortInt)
 }
+
+func BenchmarkInsertionSortInt(b *testing.B) {
+	sorttest.BenchmarkInt(b, InsertionStortInt)
+}
+
+func TestInsertionSortString(t *testing.T) {
+	sorttest.TestString(t, InsertionSortString)
+}
+
+func TestInsertionSortInterface(t *testing.T) {
+	sorttest.TestInterface(t, InsertionSort)
+}
