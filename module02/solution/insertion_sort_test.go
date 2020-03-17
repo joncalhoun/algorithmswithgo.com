@@ -6,11 +6,11 @@ import (
 )
 
 func TestInsertionSortInt(t *testing.T) {
-	sorttest.TestInt(t, InsertionStortInt)
+	sorttest.TestInt(t, InsertionSortInt)
 }
 
 func BenchmarkInsertionSortInt(b *testing.B) {
-	sorttest.BenchmarkInt(b, InsertionStortInt)
+	sorttest.BenchmarkInt(b, InsertionSortInt)
 }
 
 func TestInsertionSortString(t *testing.T) {
