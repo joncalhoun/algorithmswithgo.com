@@ -2,14 +2,15 @@ package module02
 
 import "sort"
 
-// InsertionStortInt will sort a list of integers using the insertion sort
+// InsertionSortInt will sort a list of integers using the insertion sort
 // algorithm.
 //
 // Big O (without binary search): O(N^2), where N is the size of the list.
 // Big O (with binary search): O(N log N), where N is the size of the list.
 //
-// Test with: go test -run InsertionStortInt
-func InsertionStortInt(list []int) {
+// Test with: go test -run InsertionSortInt$
+// The '$' at the end will ensure that the InsertionSortInterface tests won't be run.
+func InsertionSortInt(list []int) {
 }
 
 // InsertionSortString uses insertion sort to sort string slices. Try

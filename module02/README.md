@@ -323,7 +323,7 @@ SliceTricks: <https://github.com/golang/go/wiki/SliceTricks>
 
 
 ```go
-func InsertionStortInt(list []int) {
+func InsertionSortInt(list []int) {
 	var sorted []int
 	for _, item := range list {
 		sorted = insert(sorted, item)
