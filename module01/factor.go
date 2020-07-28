@@ -13,7 +13,7 @@ package module01
 //
 //   Factor([]int{2,3,5}, 30) // []int{2,3,5}
 //   Factor([]int{2,3,5}, 28) // []int{2,2,7}
-//   Factor([]int{2,3,5}, 720) // []int{2,2,2,3,3,5}
+//   Factor([]int{2,3,5}, 720) // []int{2,2,2,2,3,3,5}
 //
 // Examples with remainders:
 //
