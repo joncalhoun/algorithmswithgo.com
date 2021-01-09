@@ -10,6 +10,7 @@ func TestDecToBase(t *testing.T) {
 		dec, base int
 		want      string
 	}{
+		{0, 2, "0"},
 		{1, 2, "1"},
 		{2, 2, "10"},
 		{7, 3, "21"},
