@@ -14,28 +14,27 @@ import "fmt"
 // it here to make life easier for beginners.
 func FizzBuzz(n int) {
 	for i := 1; i <= n; i++ {
-
-		by3 := i%3 == 0
-		by5 := i%5 == 0
-
-		var s string
-
-		if by3 && by5 {
-			s = "Fizz Buzz"
-		} else if by3 {
-			s = "Fizz"
-		} else if by5 {
-			s = "Buzz"
-		} else {
-			s = fmt.Sprintf("%d", i)
-		}
-
-		fmt.Print(s)
-
-		if i < n {
+		v := getFizzBuzzValue(i)
+		fmt.Print(v)
+		if i != n {
 			fmt.Print(", ")
-		} else {
-			fmt.Println()
 		}
+	}
+	fmt.Println()
+}
+
+func getFizzBuzzValue(n int) string {
+	by3 := n%3 == 0
+	by5 := n%5 == 0
+
+	switch {
+	case by3 && by5:
+		return "Fizz Buzz"
+	case by3:
+		return "Fizz"
+	case by5:
+		return "Buzz"
+	default:
+		return fmt.Sprintf("%d", n)
 	}
 }
