@@ -1,7 +1,6 @@
 package module01
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -15,17 +14,14 @@ import (
 //   DecToBase(14, 2) => "1110"
 //
 func DecToBase(dec, base int) string {
+	const s = "0123456789ABCDEF"
 	var sb strings.Builder
-
 	for {
 		r := dec % base
-
-		sb.WriteString(fmt.Sprintf("%X", r))
-
+		sb.WriteByte(s[r])
 		if dec /= base; dec == 0 {
 			break
 		}
 	}
-
 	return Reverse(sb.String())
 }
