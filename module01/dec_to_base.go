@@ -20,7 +20,7 @@ func DecToBase(dec, base int) string {
 	for {
 		r := dec % base
 
-		sb.WriteString(digit(r).String())
+		sb.WriteString(fmt.Sprintf("%X", r))
 
 		if dec /= base; dec == 0 {
 			break
@@ -28,27 +28,4 @@ func DecToBase(dec, base int) string {
 	}
 
 	return Reverse(sb.String())
-}
-
-type digit int
-
-func (n digit) String() string {
-	switch {
-	case n <= 9:
-		return fmt.Sprintf("%d", n)
-	case n == 10:
-		return "A"
-	case n == 11:
-		return "B"
-	case n == 12:
-		return "C"
-	case n == 13:
-		return "D"
-	case n == 14:
-		return "E"
-	case n == 15:
-		return "F"
-	default:
-		return ""
-	}
 }
