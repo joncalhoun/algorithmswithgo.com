@@ -1,8 +1,7 @@
 package module01
 
 import (
-	"strings"
-	"unicode/utf8"
+	"golang.org/x/text/unicode/norm"
 )
 
 // Reverse will return the provided word in reverse
@@ -13,14 +12,26 @@ import (
 //
 func Reverse(word string) string {
 	b := []byte(word)
-	var sb strings.Builder
+	rb := make([]byte, len(b))
+
+	current := 0
 	for {
-		if len(b) == 0 {
+		if current == len(b) {
 			break
 		}
-		r, n := utf8.DecodeLastRune(b)
-		sb.WriteRune(r)
-		b = b[:len(b)-n]
+		next := norm.NFC.NextBoundary(b[current:], false)
+		if next == -1 {
+			next = len(b[current:])
+		}
+
+		for i := 0; i < next; i++ {
+			ri := len(rb) - current - next + i
+			rb[ri] = b[current+i]
+		}
+
+		current += next
 	}
-	return sb.String()
+
+	reversedWord := string(rb)
+	return reversedWord
 }
