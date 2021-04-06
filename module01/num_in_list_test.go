@@ -37,6 +37,8 @@ func TestNumInList(t *testing.T) {
 		{[]int{8, 2, 5, 4, 1, 8, 9, 3, 0, 88, 23, 44, 123}, 6, false},
 		{[]int{-1, -1, -1, -1, -1, -1, -1, -1}, -1, true},
 		{[]int{-1, -1, -1, -1, -1, -1, -1, -1}, 1, false},
+		{[]int{}, 1, false},
+		{nil, 1, false},
 	}
 	for _, tc := range tests {
 		t.Run(fmt.Sprintf("(%v,%v)", tc.list, tc.num), func(t *testing.T) {

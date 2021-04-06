@@ -13,7 +13,7 @@ package module01
 //
 //   Factor([]int{2,3,5}, 30) // []int{2,3,5}
 //   Factor([]int{2,3,5}, 28) // []int{2,2,7}
-//   Factor([]int{2,3,5}, 720) // []int{2,2,2,2,3,3,5}
+//   Factor([]int{2,3,5}, 720) // []int{2,2,2,3,3,5}
 //
 // Examples with remainders:
 //
@@ -22,5 +22,19 @@ package module01
 //   Factor([], 4) // []int{4}
 //
 func Factor(primes []int, number int) []int {
-	return nil
+	var results []int
+	for _, p := range primes {
+		//fmt.Println("p=", p)
+		for number%p == 0 {
+			//fmt.Printf("%dmod%d\n", p, number)
+			results = append(results, p)
+			number = number / p
+		}
+	}
+
+	if number > 1 {
+		results = append(results, number)
+	}
+	//fmt.Printf("%+v\n", results)
+	return results
 }
