@@ -32,10 +32,11 @@ func BenchmarkBubbleSortInt(b *testing.B) {
 	}
 }
 
-func TestBubbleSortString(t *testing.T) {
-	sorttest.TestString(t, BubbleSortString)
-}
+//What is being tested here?  A string and interface sort?
+// func TestBubbleSortString(t *testing.T) {
+// 	sorttest.TestString(t, BubbleSortString)
+// }
 
-func TestBubbleSortInterface(t *testing.T) {
-	sorttest.TestInterface(t, BubbleSort)
-}
+// func TestBubbleSortInterface(t *testing.T) {
+// 	sorttest.TestInterface(t, BubbleSort)
+// }

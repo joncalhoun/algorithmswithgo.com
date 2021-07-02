@@ -6,6 +6,19 @@ import "sort"
 //
 // Big O: O(N^2), where N is the size of the list
 func BubbleSortInt(list []int) {
+	for sweepNum := 0; sweepNum < len(list); sweepNum++ {
+		swapped := false
+		// -sweepNum optimization so you dont compare already swapped numbers at end
+		for i := 0; i < len(list)-1-sweepNum; i++ {
+			if list[i] > list[i+1] {
+				list[i], list[i+1] = list[i+1], list[i]
+				swapped = true
+			}
+		}
+		if !swapped {
+			break
+		}
+	}
 }
 
 // BubbleSortString is a bubble sort for string slices. Try implementing it for

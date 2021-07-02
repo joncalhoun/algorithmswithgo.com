@@ -1,6 +1,8 @@
 package module02
 
-import "sort"
+import (
+	"sort"
+)
 
 // InsertionSortInt will sort a list of integers using the insertion sort
 // algorithm.
@@ -11,6 +13,35 @@ import "sort"
 // Test with: go test -run InsertionSortInt$
 // The '$' at the end will ensure that the InsertionSortInterface tests won't be run.
 func InsertionSortInt(list []int) {
+	var sorted []int
+	for _, item := range list {
+		sorted = insert(sorted, item)
+	}
+
+	for i, val := range sorted {
+		list[i] = val
+	}
+	// newList := make([]int, len(list))
+	// for _, v := range list {
+	// 	fmt.Println(v)
+	// 	newList = append(newList, v)
+	// }
+	// fmt.Printf("%v", newList)
+}
+
+func insert(sorted []int, item int) []int {
+	for i, sortItem := range sorted {
+		if item < sortItem {
+			// sorted [:i] + item + sorted[i:]
+			// endList := append([]int{item}, sorted[i:]...)
+			// sorted = append(sorted[:i], endList...)
+			// these two lines above in one below
+			//sorted = append(sorted[:i], append([]int{item}, sorted[i:]...)...)
+			return append(sorted[:i], append([]int{item}, sorted[i:]...)...)
+		}
+	}
+	// since it is not > add it to the end
+	return append(sorted, item)
 }
 
 // InsertionSortString uses insertion sort to sort string slices. Try
